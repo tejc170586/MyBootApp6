@@ -12,14 +12,15 @@ import org.springframework.web.servlet.ModelAndView;
 public class HelloController{
 	@Autowired
 	BookService bookService;
+	final String indexDirectory = "books/list";
 	
-	@RequestMapping("books/list")
+	@RequestMapping(indexDirectory)
 	public String Index(Model model) {
 		model.addAttribute("msg", "this is setting message");
-		return "books/list";
+		return indexDirectory;
 	}
 	
-	@PostMapping(value="books/list")
+	@PostMapping(value=indexDirectory)
 	public ModelAndView postForm(
 		@RequestParam("id") String id,
 		@RequestParam("title") String title,
@@ -27,7 +28,7 @@ public class HelloController{
 		@RequestParam("publisher") String publisher,
 		@RequestParam("price") String price
 	){
-		ModelAndView mv = new ModelAndView("books/list");
+		ModelAndView mv = new ModelAndView(indexDirectory);
 		bookService.save(
 			new BookBean(
 				Integer.valueOf(id),
